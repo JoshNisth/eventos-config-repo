@@ -4,21 +4,6 @@ server:
 spring:
   application:
     name: edge-server
-
-app:
-  eureka-server: eureka-server
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://${app.eureka-server}:8761/eureka/
-    registerWithEureka: true
-    fetchRegistry: true
-  instance:
-    leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 5
-
-spring:
   cloud:
     gateway:
       discovery:
@@ -32,78 +17,31 @@ spring:
             - Path=/notifications/**
           filters:
             - StripPrefix=1
-
         - id: config-server
           uri: lb://config-server
           predicates:
             - Path=/config/**
           filters:
             - StripPrefix=1
-
-        # === SWAGGER DEL MS-OFERTAS ===
-        - id: ms-ofertas-swagger
-          uri: lb://ms-ofertas
-          predicates:
-            - Path=/ofertas/openapi/**
-          filters:
-            - name: RewritePath
-              args:
-                regexp: "/ofertas/(?<segment>.*)"
-                replacement: "/${segment}"
-
-        - id: ms-ofertas-swagger-ui
-          uri: lb://ms-ofertas
-          predicates:
-            - Path=/ofertas/openapi/swagger-ui/**
-          filters:
-            - name: RewritePath
-              args:
-                regexp: "/ofertas/openapi/(?<segment>.*)"
-                replacement: "/openapi/${segment}"
-
-        - id: ms-ofertas-swagger-docs
-          uri: lb://ms-ofertas
-          predicates:
-            - Path=/ofertas/openapi/v3/api-docs/**
-          filters:
-            - name: RewritePath
-              args:
-                regexp: "/ofertas/openapi/v3/api-docs/(?<segment>.*)"
-                replacement: "/openapi/v3/api-docs/${segment}"
-
-        - id: ms-ofertas-swagger-config
-          uri: lb://ms-ofertas
-          predicates:
-            - Path=/ofertas/openapi/v3/api-docs/swagger-config
-          filters:
-            - name: RewritePath
-              args:
-                regexp: "/ofertas/openapi/v3/api-docs/swagger-config"
-                replacement: "/openapi/v3/api-docs/swagger-config"
-
-        # ms-ofertas API
         - id: ms-ofertas
           uri: lb://ms-ofertas
           predicates:
             - Path=/ofertas/**
           filters:
             - StripPrefix=1
-
         - id: ms-reservas
           uri: lb://ms-reservas
           predicates:
             - Path=/reservas/**
           filters:
             - StripPrefix=1
-
         - id: ms-usuarios
           uri: lb://ms-usuarios
           predicates:
             - Path=/usuarios/**
           filters:
             - StripPrefix=1
-
-        # === SWAGGER DEL MS-USUARIOS ===
+        # Swagger ms-usuarios
         - id: ms-usuarios-swagger-ui
           uri: lb://ms-usuarios
           predicates:
@@ -113,7 +51,6 @@ spring:
               args:
                 regexp: "/ms-usuarios/openapi/(?<segment>.*)"
                 replacement: "/openapi/${segment}"
-
         - id: ms-usuarios-swagger-docs
           uri: lb://ms-usuarios
           predicates:
@@ -123,7 +60,6 @@ spring:
               args:
                 regexp: "/ms-usuarios/openapi/v3/api-docs/(?<segment>.*)"
                 replacement: "/openapi/v3/api-docs/${segment}"
-
         - id: ms-usuarios-swagger-config
           uri: lb://ms-usuarios
           predicates:
@@ -133,8 +69,7 @@ spring:
               args:
                 regexp: "/ms-usuarios/openapi/v3/api-docs/swagger-config"
                 replacement: "/openapi/v3/api-docs/swagger-config"
-
-        # == SWAGGER MS-NOTIFICATIONS ==
+        # Swagger ms-notifications
         - id: ms-notifications-swagger-ui
           uri: lb://ms-notifications
           predicates:
@@ -144,7 +79,6 @@ spring:
               args:
                 regexp: "/ms-notifications/openapi/(?<segment>.*)"
                 replacement: "/openapi/${segment}"
-
         - id: ms-notifications-swagger-docs
           uri: lb://ms-notifications
           predicates:
@@ -154,7 +88,6 @@ spring:
               args:
                 regexp: "/ms-notifications/openapi/v3/api-docs/(?<segment>.*)"
                 replacement: "/openapi/v3/api-docs/${segment}"
-
         - id: ms-notifications-swagger-config
           uri: lb://ms-notifications
           predicates:
@@ -164,6 +97,16 @@ spring:
               args:
                 regexp: "/ms-notifications/openapi/v3/api-docs/swagger-config"
                 replacement: "/openapi/v3/api-docs/swagger-config"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
 
 logging:
   level:
