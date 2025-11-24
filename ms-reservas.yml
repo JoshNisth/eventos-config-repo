@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://reservas-db:5432/reservas_db
     username: reservas_user
-    password: reservas_password
+    password: '{cipher}9df7f2266bcf55eed11281450f08b4aba676ec20fad04c576f4f5138965a8a1f2d204aacac6400e6b86f2596f519a2ea'
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
