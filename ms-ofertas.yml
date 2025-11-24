@@ -7,7 +7,8 @@ spring:
   datasource:
     url: jdbc:postgresql://ofertas-db:5432/ms-ofertas
     username: postgres
-    password: admin
+    #password: admin
+    password: '{cipher}b7675225486a7fc292ca368c968cad540fd20d51beb72460e33de3d9478062dd'
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
