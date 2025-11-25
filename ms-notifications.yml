@@ -8,7 +8,7 @@ spring:
   r2dbc:
     url: r2dbc:postgresql://notifications-db:5432/notifications_db
     username: postgres
-    password: admin
+    password: "{cipher}ba9d9ae24701a6a5d6d1f2a54f602016c299e71b97d7b627d3ecd70cf42228ed"
     pool:
       enabled: true
       initial-size: 5
